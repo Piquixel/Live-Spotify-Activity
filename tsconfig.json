@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"noImplicitReturns": true,
+		"noUnusedParameters": true,
+		"outDir": "./dist/js/",
+		"resolveJsonModule": true,
+		"rootDir": "./src/ts/",
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"target": "ESNext"
+	}
+}

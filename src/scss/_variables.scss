@@ -1,0 +1,8 @@
+@use 'sass:color';
+
+$shadow-color: hsl(0 0 0 / 0.2705882353);
+
+$color-primary: hsl(0 0 100);
+$color-muted: color.adjust($color-primary, $alpha: -0.3);
+
+$radiusRound: 100em;

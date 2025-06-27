@@ -1,0 +1,27 @@
+{
+	"name": "apple-music-effect",
+	"version": "0.1.0",
+	"description": "Small visual Test",
+	"homepage": "https://github.com/Piquixel/Apple-Music-Effect#readme",
+	"bugs": {
+		"url": "https://github.com/Piquixel/Apple-Music-Effect/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Piquixel/Apple-Music-Effect.git"
+	},
+	"license": "UNLICENSED",
+	"author": "ectho_materialist",
+	"type": "module",
+	"browser": "./dist/js/main.js",
+	"private": true,
+	"scripts": {},
+	"devDependencies": {
+		"@eslint/js": "^9.29.0",
+		"@stylistic/eslint-plugin": "^5.0.0",
+		"eslint": "^9.29.0",
+		"globals": "^16.2.0",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.35.0"
+	}
+}

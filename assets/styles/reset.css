@@ -1,0 +1,192 @@
+/* ************************** */
+/* *       CSS RESET        * */
+/* *       ---------        * */
+/* *   Global CSS Reset     * */
+/* ************************** */
+
+/* ---- Globally ---- */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	user-select: none;
+	outline: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+/* ---- HTML ---- */
+html {
+	overflow-x: hidden;
+	scroll-behavior: smooth;
+	font-smooth: always;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* ---- Body ---- */
+body {
+	min-height: 100vh;
+	line-height: 1;
+	-webkit-text-size-adjust: 100%;
+}
+
+/* ---- Blocks ---- */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+hr,
+main,
+menu,
+nav,
+section {
+	display: block;
+}
+
+/* ---- Lists ---- */
+ol,
+ul {
+	list-style: none;
+	list-style-type: none;
+}
+
+/* ---- Quotes ---- */
+blockquote,
+q {
+	quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+	content: '';
+	content: none;
+}
+
+/* ---- Tables ---- */
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* ---- Form ---- */
+button,
+input,
+optgroup,
+select,
+textarea {
+	appearance: none;
+}
+
+[type='button']:not(:disabled),
+[type='reset']:not(:disabled),
+[type='submit']:not(:disabled),
+button:not(:disabled),
+label[for]:not(:disabled) {
+	cursor: pointer;
+}
+
+/* ---- Anchor ---- */
+a {
+	color: inherit;
+	display: inline-block;
+	text-decoration: none;
+	background: none;
+}
+
+/* ---- Images ---- */
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	object-position: center;
+	border-style: none;
+}
+
+/* ---- Paragraph ---- */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+	hyphens: auto;
+}
+
+/* ---- Horizontal Rule ---- */
+hr {
+	box-sizing: content-box;
+	height: 0;
+	border: 0;
+	border-top: 1px solid #ccc;
+	overflow: visible;
+	margin-block: 1em;
+}
+
+/* ---- Code ---- */
+code,
+kbd,
+pre,
+samp {
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	font-family: monospace, monospace;
+	font-size: 1em;
+}
+
+/* ---- Abbreviation ---- */
+abbr[title] {
+	border-bottom: none;
+	text-decoration: underline;
+	text-decoration: underline dotted;
+}
+
+/* ---- Mark ---- */
+/* mark {
+	background-color: #ff0;
+	color: #000;
+	text-decoration: underline dotted;
+} */
+
+/* ---- Strong ---- */
+b,
+strong {
+	font-weight: bold;
+}
+
+/* ---- Small ---- */
+small {
+	font-size: 80%;
+}
+
+/* ---- Subscript ---- */
+sub,
+sup {
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+
+sub {
+	bottom: -0.25em;
+}
+
+sup {
+	top: -0.5em;
+}

@@ -1,0 +1,17 @@
+@keyframes coverLoad {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 0.85;
+	}
+}
+
+@keyframes rotation {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}

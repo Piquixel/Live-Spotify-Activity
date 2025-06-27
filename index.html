@@ -1,56 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=7" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+		<meta name="author" content="ectho_materialist" />
+		<meta name="description" content="A visual test" />
+		<meta name="keywords" content="" />
+
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; style-src-elem 'self' fonts.googleapis.com; script-src-elem 'self' 'unsafe-inline' cdnjs.cloudflare.com; font-src fonts.gstatic.com; img-src 'self' i.scdn.co; connect-src 'self' api.lanyard.rest data:"
+		/>
+
+		<title>Spotify Now Playing | Apple Music Effect</title>
+
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
 			href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
 			rel="stylesheet"
 		/>
-		<title>Document</title>
-		<link rel="stylesheet" href="style.css" />
+
+		<link rel="stylesheet" type="text/css" href="./assets/styles/reset.css" />
+		<link rel="stylesheet" type="text/css" href="./assets/styles/normalize.css" />
+		<link rel="stylesheet" type="text/css" href="./dist/css/main.min.css" />
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.6.0/color-thief.min.js"></script>
+		<script defer type="module" src="./dist/js/main.js"></script>
 	</head>
 	<body>
-		<div class="sidebar">
+		<div id="sidebar-container">
 			<aside>
 				<h3>Listening to Spotify</h3>
-				<img src="" class="cover" crossorigin="anonymous" />
-				<div class="infos">
+				<img src id="album-art" crossorigin="anonymous" />
+				<div id="track-info">
 					<h2></h2>
 					<p></p>
 				</div>
-				<div class="bk">
-					<div class="background">
-						<div class="container">
-							<img src="" crossorigin="anonymous" class="color" />
-							<img src="" crossorigin="anonymous" class="back" />
-							<img
-								src=""
-								crossorigin="anonymous"
-								class="back-center"
-							/>
+				<div id="background-container">
+					<div>
+						<div>
+							<img src crossorigin="anonymous" class="backgroundEffectImages" id="foreground" />
+							<img src crossorigin="anonymous" class="backgroundEffectImages" id="middle_ground" />
+							<img src crossorigin="anonymous" class="backgroundEffectImages" id="background" />
 						</div>
 					</div>
 				</div>
 			</aside>
 		</div>
-		<div class="palette">
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-			<span></span>
-		</div>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.min.js"></script>
-		<script defer src="main.js"></script>
 	</body>
 </html>

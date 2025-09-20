@@ -6,3 +6,8 @@ $color-primary: hsl(0 0 100);
 $color-muted: color.adjust($color-primary, $alpha: -0.3);
 
 $radiusRound: 100em;
+
+$default-color: hsl(0 0 20);
+
+$low-accent: hsl(0 0 100 / 0.08);
+$lower-accent: hsl(0 0 100 / 0.16);

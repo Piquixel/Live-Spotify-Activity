@@ -11,4 +11,4 @@
 
 ---
 
-Using the Lanyard API, Live Spotify Activity is able to get a Spotify listening activity if available.
+Using the Lanyard API, Live Spotify Activity is able to get the Spotify listening activity of any Discord user sharing it, if available on the API.

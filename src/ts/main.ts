@@ -1,114 +1,104 @@
-/* eslint-disable camelcase */
+import { DEFAULT_ID, API_BASE, INITIAL_TITLE } from './constants.js'
+import { formatArtists, isValid } from './utils.js'
 
-// Define API default variables
-const defaultId = '383187323963047936'
+// State Management
+const state = {
+  currentUser: DEFAULT_ID,
+  currentTrack: '',
+}
 
-const fetchResponse: FetchUserFunction = async (userId) => {
-  if (userId.length !== 18 || /[a-zA-Z]/.test(userId)) {
-    userId = defaultId
-  }
-  try {
-    return await fetch('https://api.lanyard.rest/v1/users/' + userId).then((res) =>
-      res.json()
-    )
-  } catch (err) {
-    console.error(err)
-  }
+// UI Elements Cache
+const UI = {
+  root: document.querySelector(':root') as HTMLElement,
+  status: document.getElementById('activity-status'),
+  trackTitle: document.querySelector('.spotify-track__title'),
+  trackArtist: document.querySelector('.spotify-track__artist'),
+  userButton: document.getElementById('set-listener-id-btn') as HTMLButtonElement,
+  images: document.querySelectorAll<HTMLImageElement>('img')
 }
 
 const colorThief = new ColorThief()
-const imagePlaceholder = new Image()
+const colorSampler = new Image()
+colorSampler.crossOrigin = 'Anonymous'
 
-const root = document.querySelector(':root') as HTMLElement
-const activityStatus = document.getElementById('activity-status') as HTMLElement
-const trackTitle = document.getElementById('track-title') as HTMLElement
-const trackArtist = document.getElementById('track-artist') as HTMLElement
-const userSelect = document.getElementById('user-select') as HTMLButtonElement
-const overlayContainer = document.querySelector('.overlayContainer') as HTMLElement
+/**
+ * Fetch data from Lanyard API
+*/
+async function fetchLanyard (userId: string): Promise<LanyardFile | null> {
+  const id = isValid(userId) ? userId : DEFAULT_ID
 
-const initialTitle = document.title
-
-let currentTrack = ''
-let currentUser = ''
-
-const getActivity = async () => {
-  const { data: { listening_to_spotify, spotify } } = await fetchResponse(currentUser)
-
-  if (!listening_to_spotify || spotify.track_id === currentTrack) return
-
-  currentTrack = spotify.track_id
-
-  imagePlaceholder.addEventListener('load', () => {
-    root?.style.setProperty(
-      '--dominant-color',
-      `rgb(${colorThief.getColor(imagePlaceholder).join(',')})`
-    )
-  })
-
-  imagePlaceholder.crossOrigin = 'Anonymous'
-  imagePlaceholder.src = spotify.album_art_url
-
-  const coverImages: NodeListOf<HTMLImageElement> = document.querySelectorAll('img')
-
-  for (const image of coverImages) {
-    image.src = spotify.album_art_url
+  try {
+    const response = await fetch(`${API_BASE}${id}`)
+    if (!response.ok) throw new Error(response.statusText)
+    return await response.json()
+  } catch (err) {
+    console.error('Failed to fetch Lanyard Data', err)
+    return null
   }
+}
 
-  trackTitle.textContent = spotify.song
+/**
+ * Updates the UI with new Spotify data
+ */
+function updateSpotifyUI (spotify: SpotifyObject): void {
+  if (state.currentTrack === spotify.track_id) return
+  state.currentTrack = spotify.track_id
 
-  const artists = spotify.artist.split('; ')
-  if (artists.length > 1) {
-    trackArtist.textContent = artists.join(', ').replace(/, ([^,]*)$/, ' & $1')
+  // 1. Update Text content
+  if (UI.trackTitle) UI.trackTitle.textContent = spotify.song
+  if (UI.trackArtist) UI.trackArtist.textContent = formatArtists(spotify.artist)
+
+  // 2. Update Document Title
+  document.title = `${INITIAL_TITLE} - ${spotify.song}`
+
+  // 3. Update Images
+  UI.images.forEach(img => (img.src = spotify.album_art_url))
+
+  // 4. Update Theme Color (Dominant Color)
+  colorSampler.src = spotify.album_art_url
+}
+
+// Color processing event
+colorSampler.addEventListener('load', () => {
+  const [r, g, b] = colorThief.getColor(colorSampler)
+  UI.root?.style.setProperty('--dominant-color', `rgb(${r},${g},${b})`)
+})
+
+// Main loop logic
+async function tick (): Promise<void> {
+  const res = await fetchLanyard(state.currentUser)
+  if (!res?.success) return
+
+  const { listening_to_spotify: listening, spotify, discord_user: discordUser } = res.data
+
+  // Update User Display Name
+  if (UI.userButton) UI.userButton.textContent = discordUser.display_name
+
+  if (listening && spotify) {
+    updateSpotifyUI(spotify)
+    if (UI.status) UI.status.textContent = '• Listening to Spotify'
   } else {
-    trackArtist.textContent = artists[0]
-  }
-
-  document.title = `${initialTitle} - ${trackTitle.textContent} by ${trackArtist.textContent}`
-}
-
-const getUser = async () => {
-  const { data: { discord_user: { display_name: userDisplayName } } } = await fetchResponse(currentUser)
-
-  if (currentUser !== userDisplayName) {
-    userSelect.textContent = userDisplayName
-    activityStatus.innerHTML = '• Listening to Spotify'
+    // unloadSpotifyUI()
+    if (UI.status) UI.status.textContent = '• Offline / Not Listening'
   }
 }
 
-const showEditModal = () => {
-  const form = document.createElement('form')
-  const label = document.createElement('label')
-  label.htmlFor = 'user-id-input'
-  label.textContent = 'User\'s Discord ID'
-  const input = document.createElement('input')
-  input.type = 'text'
-  input.id = 'user-id-input'
-  input.placeholder = '383187323963047936'
-  input.minLength = 18
-  input.maxLength = 18
-  input.required = true
-  input.value = currentUser
-  const span = document.createElement('span')
-  const cancel = document.createElement('button')
-  cancel.type = 'reset'
-  cancel.textContent = 'Cancel'
-  cancel.addEventListener('click', () => overlayContainer.removeChild(form))
-  const confirm = document.createElement('button')
-  confirm.type = 'submit'
-  confirm.textContent = 'Confirm'
-  confirm.addEventListener('click', (e) => {
-    e.preventDefault()
-    currentUser = input.value
-    getUser()
-    overlayContainer.removeChild(form)
-  })
-  span.append(cancel, confirm)
-  form.append(label, input, span)
-  overlayContainer.appendChild(form)
+/**
+ * Event Listeners
+ */
+UI.userButton?.addEventListener('click', () => {
+  const newId = prompt('Enter a Discord User ID', state.currentUser) || DEFAULT_ID
+  if (newId && isValid(newId)) {
+    state.currentUser = newId.trim()
+    state.currentTrack = '' // Reset to force UI update
+    tick()
+  }
+})
+
+// Initialize
+function init (): void {
+  tick()
+  setInterval(tick, 2000) // 2s is gentler on the API and sufficient for status
 }
 
-userSelect.addEventListener('click', showEditModal)
-
-getUser()
-getActivity()
-setInterval(getActivity, 1000)
+init()

@@ -1,13 +1,35 @@
-@use 'sass:color';
+$font-main: "Poppins", sans-serif;
 
-$shadow-color: hsl(0 0 0 / 0.2705882353);
+:root {
+	// Colors
+	--shadow-color: #{hsla(0, 0%, 0%, 0.2705882353)};
 
-$color-primary: hsl(0 0 100);
-$color-muted: color.adjust($color-primary, $alpha: -0.3);
+	--default-background: #{hsl(0, 0%, 20%)};
 
-$radiusRound: 100em;
+	// Text
+	--text-normal: #{hsl(0, 0%, 95%)};
+	--text-muted: #{hsl(0, 0%, 60%)};
 
-$default-color: hsl(0 0 20);
+	// Radiuses
+	--radius-xs: 2px;
+	--radius-sm: 4px;
+	--radius-md: 8px;
+	--radius-lg: 16px;
+	--radius-xl: 24px;
+	--radius-round: 100em;
 
-$low-accent: hsl(0 0 100 / 0.08);
-$lower-accent: hsl(0 0 100 / 0.16);
+	// Spacings
+	--space-xs: 0.25rem;
+	--space-sm: 0.5rem;
+	--space-md: 1rem;
+	--space-lg: 2rem;
+	--space-xl: 2.5rem;
+
+	// Transitions
+	--transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+	--transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+	--transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+	--transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	--transition-in: 250ms cubic-bezier(0, 0, 0.2, 1);
+	--transition-out: 200ms cubic-bezier(0.4, 0, 1, 1);
+}

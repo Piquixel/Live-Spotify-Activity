@@ -1,7 +1,23 @@
-@mixin flex($orient: row, $wrap: wrap, $justify: flex-start, $align: $justify, $r-gap: 0, $c-gap: $r-gap) {
+@use "variables";
+
+@mixin flex($direction: row, $justify: flex-start, $align: center, $gap: 0) {
 	display: flex;
-	flex-flow: $orient $wrap;
+	flex-direction: $direction;
 	justify-content: $justify;
 	align-items: $align;
-	gap: $r-gap $c-gap;
+	gap: $gap;
+}
+
+@mixin absolute-fill($w: 100%, $h: 100%) {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: $w;
+	height: $h;
+}
+
+@mixin glass($opacity: 0.5) {
+	background-color: hsla(0, 0%, 0%, $opacity);
+	backdrop-filter: blur(12px);
+	border: 1px solid var(--border-color);
 }

@@ -1,25 +1,19 @@
 {
-  "name": "live-spotify-activity",
-  "version": "0.1.1",
-  "description": "A quick Spotify activity viewer built around the lanyard API.",
-  "homepage": "https://github.com/Piquixel/Apple-Music-Effect#readme",
-  "bugs": {
-    "url": "https://github.com/Piquixel/Apple-Music-Effect/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Piquixel/Apple-Music-Effect.git"
-  },
-  "license": "GPL-3.0-only",
-  "author": "ectho_materialist",
-  "type": "module",
-  "private": true,
-  "devDependencies": {
-    "@eslint/js": "^9.36.0",
-    "eslint": "^9.36.0",
-    "globals": "^16.4.0",
-    "neostandard": "^0.12.2",
-    "typescript": "^5.9.2",
-    "typescript-eslint": "^8.44.0"
-  }
+	"name": "live-spotify-activity",
+	"version": "0.1.1",
+	"description": "A quick Spotify activity viewer built around the lanyard API.",
+	"homepage": "https://github.com/Piquixel/Apple-Music-Effect#readme",
+	"bugs": {
+		"url": "https://github.com/Piquixel/Apple-Music-Effect/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Piquixel/Apple-Music-Effect.git"
+	},
+	"license": "MIT",
+	"author": "ectho_materialist",
+	"devDependencies": {
+		"eslint": "^9.39.2",
+		"neostandard": "^0.12.2"
+	}
 }

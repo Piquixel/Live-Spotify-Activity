@@ -1,188 +1,130 @@
-@import 'variables', 'keyframes', 'mixins';
+@use "variables" as v;
+@use "mixins" as m;
+@use "keyframes";
 
-body {
-  @include flex(column, nowrap, center);
-  background-color: var(--dominant-color);
+.app-container {
+	@include m.flex(column, center);
+	background-color: var(--dominant-color);
 }
 
-#sidebar-container {
-  position: fixed;
-  width: 420px;
-  height: calc(100% - 2.5rem);
-  // background-color: var(--dominant-color, #ccc);
-  background-color: transparent;
-  margin-block: 0.5rem;
-  border-radius: 0.66rem;
-  overflow: hidden;
-  transition: background 150ms ease;
-  box-shadow: 0 0 25px 4px $shadow-color;
+.spotify-track {
+	position: fixed;
+	width: 420px;
+	height: calc(100% - var(--space-xl));
+	background-color: transparent;
+	margin-block: var(--space-sm);
+	border-radius: var(--radius-md);
+	overflow: hidden;
+	transition: background var(--transition-fast);
+	box-shadow: 0 0 25px 4px var(--shadow-color);
 
-  aside {
-    @include flex(column, nowrap, $r-gap: 1rem);
-    padding: 1rem;
+	&__container {
+		@include m.flex(column, $align: normal, $gap: 1rem);
+		padding: var(--space-md);
 
-    & > *:not(#background-container) {
-      position: relative;
-      z-index: 1;
-    }
+		& > *:not(.spotify-track__background) {
+			position: relative;
+			z-index: 1;
+		}
+	}
 
-    #album-art {
-      opacity: 0;
-      border-radius: 0.5rem;
-      animation: coverLoad 150ms ease 20ms 1 forwards;
-      box-shadow: 0 9px 20px 0 $shadow-color;
-    }
+	&__heading {
+		@include m.flex($gap: var(--space-xs));
+		color: var(--text-normal);
+		font: 700 1rem/32px "Nunito", sans-serif;
 
-    #track-info {
-      color: $color-primary;
-      font: 400 1rem/1 'Poppins', sans-serif;
-      white-space: nowrap;
-      max-width: 100%;
-      overflow: hidden;
+		button {
+			font: inherit;
+			font-weight: 900;
+			background-color: rgba(255, 255, 255, 0.08);
+			padding-inline: var(--space-xs);
+			border-radius: var(--radius-sm);
+			color: inherit;
 
-      & > * {
-        overflow: inherit;
-        text-overflow: ellipsis;
-      }
+			&:hover {
+				background-color: rgba(255, 255, 255, 0.16);
+				text-decoration: underline;
+			}
+		}
+	}
 
-      h2 {
-        font-size: 1.5rem;
-        line-height: 2rem;
-        font-weight: 700;
-      }
+	&__cover {
+		opacity: 0;
+		border-radius: var(--radius-md);
+		animation: coverLoad 150ms ease 20ms 1 forwards;
+		box-shadow: 0 9px 20px 0 var(--shadow-color);
+	}
 
-      p {
-        color: $color-muted;
-        line-height: 1.25;
-      }
-    }
+	&__info {
+		color: var(--text-normal);
+		font: 400 1rem/1 v.$font-main;
+		white-space: nowrap;
+		max-width: 100%;
+		overflow: hidden;
 
-    #background-container > div > div {
-      filter: saturate(2) brightness(0.7);
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
+		* {
+			overflow: inherit;
+			text-overflow: ellipsis;
+		}
+	}
 
-      &::before {
-        content: '';
-        position: absolute;
-        pointer-events: none;
-        inset: inherit;
-        background-color: var(--dominant-color, $default-color);
-        z-index: 3;
-        opacity: 50%;
-      }
+	&__title {
+		font: 700 1.5rem/2 v.$font-main;
+	}
 
-      .backgroundEffectImages {
-        position: absolute;
-        width: 200%;
-        max-width: unset;
-        animation: rotation 35s linear infinite;
-        filter: blur(40px);
-        border-radius: $radiusRound;
+	&__artist {
+		color: var(--text-muted);
+		line-height: 1.25;
+	}
 
-        &#foreground {
-          right: 0;
-          top: 0;
-          z-index: 2;
-        }
+	&__background {
+		&__container {
+			filter: saturate(2) brightness(0.7);
+			@include m.absolute-fill;
+			pointer-events: none;
+			overflow: hidden;
 
-        &#middle_ground {
-          left: 0;
-          bottom: 0;
-          z-index: 1;
-          animation-direction: reverse;
-        }
+			&::before {
+				content: "";
+				@include m.absolute-fill;
+				pointer-events: none;
+				background-color: var(
+					--dominant-color,
+					var(--default-background)
+				);
+				z-index: 3;
+				opacity: 50%;
+			}
+		}
 
-        &#background {
-          z-index: 0;
-          width: 300%;
-          right: -50%;
-          top: -20%;
-          animation-direction: reverse;
-        }
-      }
-    }
-  }
+		&__components {
+			position: absolute;
+			width: 200%;
+			max-width: unset;
+			animation: rotation 35s linear infinite;
+			filter: blur(40px);
+			border-radius: var(--radius-round);
 
-  hgroup {
-    @include flex($c-gap: 0.25rem);
-    color: $color-primary;
-    font: 700 1rem/32px 'Nunito', sans-serif;
-  }
+			&--top {
+				right: 0;
+				top: 0;
+				z-index: 2;
+			}
 
-  #user-select {
-    font: inherit;
-    font-weight: 900;
-    background-color: $low-accent;
-    padding-inline: 0.25rem;
-    border-radius: 3px;
-    color: inherit;
+			&--middle {
+				left: 0;
+				bottom: 0;
+				z-index: 1;
+				animation-direction: reverse;
+			}
 
-    &:hover {
-      background-color: $lower-accent;
-      text-decoration: underline;
-    }
-  }
-}
-
-.overlayContainer {
-  @include flex($justify: center);
-  position: absolute;
-  inset: 0;
-
-  &:empty {
-    pointer-events: none;
-  }
-
-  &:not(:empty) {
-    backdrop-filter: saturate(0.2) brightness(0.25) blur(4px);
-  }
-
-  form {
-    @include flex(column, nowrap, space-between);
-    background-color: $default-color;
-    padding: 1rem;
-    height: 125px;
-    border: hsl(0 0 100 / 0.08);
-    border-radius: 8px;
-    box-shadow: 0 0 8px 2px hsl(0 0 0 / 0.33);
-
-    label {
-      font: 400 0.85rem/1 'Noto Sans', sans-serif;
-      letter-spacing: 0.02rem;
-      color: hsl(0 0 80);
-    }
-
-    input {
-      border: 2px solid var(--dominant-color, royalblue);
-      border-radius: 100em;
-      font: 300 0.9rem/1 'Poppins', sans-serif;
-      background-color: hsl(0 0 0 / 0.1);
-      padding: 0.2rem 0.5rem;
-      color: #fff;
-      text-align: center;
-    }
-
-    span {
-      @include flex($justify: flex-end, $c-gap: 0.25rem);
-
-      button {
-        border-radius: 100em;
-        padding: 0.25rem 0.75rem;
-        font: 300 0.78rem/1 'Poppins', sans-serif;
-
-        &:first-child {
-          background: none;
-          color: hsl(0 0 85);
-          text-decoration: underline;
-
-          &:hover {
-            background-color: hsl(0 0 100 / 0.1);
-          }
-        }
-      }
-    }
-  }
+			&--bottom {
+				z-index: 0;
+				width: 300%;
+				right: -50%;
+				top: -20%;
+				animation-direction: reverse;
+			}
+		}
+	}
 }

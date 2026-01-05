@@ -1,0 +1,165 @@
+:root {
+  --shadow-color: hsla(0, 0%, 0%, 0.2705882353);
+  --default-background: hsl(0, 0%, 20%);
+  --text-normal: hsl(0, 0%, 95%);
+  --text-muted: hsl(0, 0%, 60%);
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-round: 100em;
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 2.5rem;
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 500ms cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --transition-in: 250ms cubic-bezier(0, 0, 0.2, 1);
+  --transition-out: 200ms cubic-bezier(0.4, 0, 1, 1);
+}
+
+@keyframes coverLoad {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.85;
+  }
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.app-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  background-color: var(--dominant-color);
+}
+
+.spotify-track {
+  position: fixed;
+  width: 420px;
+  height: calc(100% - var(--space-xl));
+  background-color: transparent;
+  margin-block: var(--space-sm);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: background var(--transition-fast);
+  box-shadow: 0 0 25px 4px var(--shadow-color);
+}
+.spotify-track__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: normal;
+  gap: 1rem;
+  padding: var(--space-md);
+}
+.spotify-track__container > *:not(.spotify-track__background) {
+  position: relative;
+  z-index: 1;
+}
+.spotify-track__heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--text-normal);
+  font: 700 1rem/32px "Nunito", sans-serif;
+}
+.spotify-track__heading button {
+  font: inherit;
+  font-weight: 900;
+  background-color: rgba(255, 255, 255, 0.08);
+  padding-inline: var(--space-xs);
+  border-radius: var(--radius-sm);
+  color: inherit;
+}
+.spotify-track__heading button:hover {
+  background-color: rgba(255, 255, 255, 0.16);
+  text-decoration: underline;
+}
+.spotify-track__cover {
+  opacity: 0;
+  border-radius: var(--radius-md);
+  animation: coverLoad 150ms ease 20ms 1 forwards;
+  box-shadow: 0 9px 20px 0 var(--shadow-color);
+}
+.spotify-track__info {
+  color: var(--text-normal);
+  font: 400 1rem/1 "Poppins", sans-serif;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+}
+.spotify-track__info * {
+  overflow: inherit;
+  text-overflow: ellipsis;
+}
+.spotify-track__title {
+  font: 700 1.5rem/2 "Poppins", sans-serif;
+}
+.spotify-track__artist {
+  color: var(--text-muted);
+  line-height: 1.25;
+}
+.spotify-track__background__container {
+  filter: saturate(2) brightness(0.7);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+.spotify-track__background__container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background-color: var(--dominant-color, var(--default-background));
+  z-index: 3;
+  opacity: 50%;
+}
+.spotify-track__background__components {
+  position: absolute;
+  width: 200%;
+  max-width: unset;
+  animation: rotation 35s linear infinite;
+  filter: blur(40px);
+  border-radius: var(--radius-round);
+}
+.spotify-track__background__components--top {
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+.spotify-track__background__components--middle {
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  animation-direction: reverse;
+}
+.spotify-track__background__components--bottom {
+  z-index: 0;
+  width: 300%;
+  right: -50%;
+  top: -20%;
+  animation-direction: reverse;
+}/*# sourceMappingURL=main.css.map */

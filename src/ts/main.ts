@@ -58,6 +58,18 @@ function updateSpotifyUI (spotify: SpotifyObject): void {
   colorSampler.src = spotify.album_art_url
 }
 
+/**
+ * Unloads the Spotify UI
+ */
+function unloadSpotifyUI (): void {
+  if (UI.trackTitle) UI.trackTitle.textContent = ''
+  if (UI.trackArtist) UI.trackArtist.textContent = ''
+  document.title = INITIAL_TITLE
+  colorSampler.src = ''
+  UI.images.forEach(img => (img.src = ''))
+  UI.root?.style.removeProperty('--dominant-color')
+}
+
 // Color processing event
 colorSampler.addEventListener('load', () => {
   const [r, g, b] = colorThief.getColor(colorSampler)
@@ -78,7 +90,7 @@ async function tick (): Promise<void> {
     updateSpotifyUI(spotify)
     if (UI.status) UI.status.textContent = '• Listening to Spotify'
   } else {
-    // unloadSpotifyUI()
+    unloadSpotifyUI()
     if (UI.status) UI.status.textContent = '• Offline / Not Listening'
   }
 }

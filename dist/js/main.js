@@ -52,6 +52,19 @@ function updateSpotifyUI(spotify) {
     // 4. Update Theme Color (Dominant Color)
     colorSampler.src = spotify.album_art_url;
 }
+/**
+ * Unloads the Spotify UI
+ */
+function unloadSpotifyUI() {
+    if (UI.trackTitle)
+        UI.trackTitle.textContent = '';
+    if (UI.trackArtist)
+        UI.trackArtist.textContent = '';
+    document.title = INITIAL_TITLE;
+    colorSampler.src = '';
+    UI.images.forEach(img => (img.src = ''));
+    UI.root?.style.removeProperty('--dominant-color');
+}
 // Color processing event
 colorSampler.addEventListener('load', () => {
     const [r, g, b] = colorThief.getColor(colorSampler);
@@ -72,7 +85,7 @@ async function tick() {
             UI.status.textContent = '• Listening to Spotify';
     }
     else {
-        // unloadSpotifyUI()
+        unloadSpotifyUI();
         if (UI.status)
             UI.status.textContent = '• Offline / Not Listening';
     }
